@@ -3,8 +3,28 @@ import PokemonCollection from './PokemonCollection'
 import PokemonForm from './PokemonForm'
 import Search from './Search'
 import { Container } from 'semantic-ui-react'
+import Pokemons from '../db.json'
+
 
 class PokemonPage extends React.Component {
+
+  constructor() {
+    super()
+    this.state = {
+      pokemonCol: [],
+      searchTerm: ''
+    }
+  }
+
+  handleSearch = (event) => {
+    this.setState({
+      searchTerm: event.target.value 
+    })
+  }
+
+ 
+
+
   render() {
     return (
       <Container>
@@ -12,9 +32,9 @@ class PokemonPage extends React.Component {
         <br />
         <PokemonForm />
         <br />
-        <Search onChange={() => console.log('🤔')} />
+        <Search onChange={this.handleSearch} />
         <br />
-        <PokemonCollection />
+        <PokemonCollection pokemons={this.state.searchTerm !== '' ? this.state.pokemonCol : Pokemons.pokemon}/>
       </Container>
     )
   }
