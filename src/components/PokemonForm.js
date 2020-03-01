@@ -13,16 +13,43 @@ class PokemonForm extends React.Component {
     }
   }
 
+  addNewPokemon = (e) => {
+    // console.log(e)
+    this.setState({
+      [e.target.name] : [e.target.value]
+    })
+    // console.log(e.target.name)
+  }
+  
+  handleSubmit = (e) => {
+    const pokemon = {
+      name: this.state.name,
+      stats: [
+        {name: "hp", value: this.state.hp}
+      ],
+      sprites: {
+        front: this.state.frontUrl,
+        back: this.state.backUrl
+      }
+    }
+    e.target.reset()
+    this.props.addToPokemons(pokemon)
+  }
+
+ 
+
+
+
   render() {
     return (
       <div>
         <h3>Add a Pokemon!</h3>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={(e) => this.handleSubmit(e)}>
           <Form.Group widths="equal">
-            <Form.Input fluid label="Name" placeholder="Name" name="name" />
-            <Form.Input fluid label="hp" placeholder="hp" name="hp" />
-            <Form.Input fluid label="Front Image URL" placeholder="url" name="frontUrl" />
-            <Form.Input fluid label="Back Image URL" placeholder="url" name="backUrl" />
+            <Form.Input onChange={(e) => this.addNewPokemon(e)} fluid label="Name" placeholder="Name" name="name" />
+            <Form.Input onChange={(e) => this.addNewPokemon(e)} fluid label="hp" placeholder="hp" name="hp" />
+            <Form.Input onChange={(e) => this.addNewPokemon(e)} fluid label="Front Image URL" placeholder="url" name="frontUrl" />
+            <Form.Input onChange={(e) => this.addNewPokemon(e)} fluid label="Back Image URL" placeholder="url" name="backUrl" />
           </Form.Group>
           <Form.Button>Submit</Form.Button>
         </Form>
